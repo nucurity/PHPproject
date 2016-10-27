@@ -1,0 +1,43 @@
+﻿CREATE TABLE IF NOT EXISTS userinfo (
+    userId INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    firstName VARCHAR(255) NOT NULL,
+    lastName VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone VARCHAR (255) NOT NULL,
+    status ENUM ('active','inactive') NOT NULL DEFAULT 'active',
+    dateCreated DATE NOT NULL
+);
+
+
+CREATE TABLE IF NOT EXISTS userlogin (
+  accountId INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  userId INT(11) NOT NULL,
+  username VARCHAR(255) NOT NULL,
+  userpass VARCHAR(255) NOT NULL,
+  
+  FOREIGN KEY (userId) REFERENCES userinfo (userId)
+);
+
+
+CREATE TABLE IF NOT EXISTS credit(
+    creditId INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    accountId INT(11) NOT NULL,
+    creditName VARCHAR(255) NOT NULL,
+    creditCategory VARCHAR(255) NOT NULL DEFAULT 'uncategorized',
+    creditDate DATE NOT NULL,
+    creditAmount DECIMAL(9,2) NOT NULL,  
+    
+    FOREIGN KEY (accountId) REFERENCES userlogin (accountId)
+);
+
+CREATE TABLE IF NOT EXISTS debit(
+    debitId INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    accountId INT(11) NOT NULL,
+    debitName VARCHAR(255) NOT NULL,
+    debitCategory VARCHAR(255) NOT NULL DEFAULT 'uncategorized',
+    debitDate DATE NOT NULL,
+    debitAmount DECIMAL(9,2) NOT NULL,  
+    
+    FOREIGN KEY (accountId) REFERENCES userlogin (accountId)
+);
+
